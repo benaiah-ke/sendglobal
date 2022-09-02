@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SendGlobal</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="login">
+
+        <form action="" class="login_form">
+            Email: <input type="email" name="email" id="email" required><br>
+            Password: <input type="password" name="password" id="password" required><br>
+            <button>Log In</button>
+        </form>
+
+    </div>
+
+    <div class="main hidden">
+
+        Balance: <span id="balance">0.00</span>
+
+        <ul class="transactions">
+
+        </ul>
+
+    </div>
+
+    <div class="send_money hidden">
+
+        <form action="" class="send_money_form">
+            Receiver's Email: <input type="email" name="email" class="email" required><br>
+            Amount: <input type="number" name="amount" class="amount" required><br>
+            <button>Send</button>
+        </form>
+
+    </div>
+    
+
+    <script src="index.js"></script>
+</body>
+</html>

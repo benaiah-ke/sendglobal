@@ -1,0 +1,18 @@
+{
+    "users" : [
+        {
+            "id": 1,
+            "name": "John Doe",
+            "currency": "KES",
+            "email": "john@gmail.com",
+            "password": "password"
+        },
+        {
+            "id": 2,
+            "name": "Alice Brown",
+            "currency": "USD",
+            "email": "alice@gmail.com",
+            "password": "password"
+        }
+    ]
+}
