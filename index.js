@@ -1,6 +1,9 @@
 // This will keep track of the currently logged in user
 var loggedInUser = null;
 
+// Api key for currency converter API
+const MY_API_KEY = "oHTkg5TwxSW3zWXgc8ISzq1SlEliHUrK";
+
 // UI Screens
 const loginScreen = document.querySelector('.login');
 const mainScreen = document.querySelector('.main');
@@ -67,6 +70,7 @@ function updateMainScreen() {
     // Hide the login screen and show main screen
     mainScreen.classList.remove('hidden');
     loginScreen.classList.add('hidden');
+    sendMoneyScreen.classList.add('hidden');
 
     // Get the user's transactions
     loggedInUser.transactions = [];
@@ -77,9 +81,9 @@ function updateMainScreen() {
 // Get the logged in user's transactions
 function getLatestTransactions(){
     fetch("http://localhost:3000/transactions?user_id=" + loggedInUser.id)
-            .then(response => response.json())
-            .then(transactions => {
-                loggedInUser.transactions = transactions;
+    .then(response => response.json())
+    .then(transactions => {
+            loggedInUser.transactions = transactions;
 
                 // Show the transactions and balance
                 updateTransactionUi();
@@ -90,23 +94,24 @@ function updateTransactionUi(){
     var balance = 0;
 
     const transactionList = document.querySelector(".transactions");
+    transactionList.innerHTML = '';
+
     loggedInUser.transactions.forEach((transaction) => {
         // Update balance
-        balance += transaction.creditAmount;
-        balance -= transaction.debitAmount;
+        balance += parseFloat(transaction.creditAmount);
+        balance -= parseFloat(transaction.debitAmount);
 
         // Add to list of transactions
-        transactionList.innerHTML = '';
         transactionList.innerHTML += `
             <li>
             ${transaction.type}-
             ${transaction.creditAmount}-
-            ${transaction.debitAmount}-
+            ${transaction.debitAmount}
             </li>
         `;
     });
 
-    document.querySelector('#balance').innerText = loggedInUser.currency + ' ' + balance;
+    document.querySelector('#balance').innerText = loggedInUser.currency + ' ' + balance.toFixed(2);
 }
 
 
@@ -123,7 +128,14 @@ function sendMoney(){
         var amountField = document.querySelector('.send_money_form .amount');
 
         // Ensure user has enough balance
-        var amount = amountField.value;
+        var amount = parseFloat(amountField.value);
+
+        // Ensure user is not sending to himself
+        if(emailField.value == loggedInUser.email){
+            alert("You cannot send money to yourself!");
+            return;
+        }
+
         if(amount > loggedInUser.balance){
             alert("Amount exceeds your balance!");
             return;
@@ -140,7 +152,7 @@ function sendMoney(){
                 }else{
                     var receivingUser = users[0];
 
-                    sendToUser(receivingUser, amount);
+                    convertCurrencyAndSend(receivingUser, amount);
 
                     // Clear fields
                     emailField.value = '';
@@ -150,17 +162,8 @@ function sendMoney(){
     })
 }
 
-function sendToUser(receivingUser, amount){
-    var time = "2022-09-01 10:43"
-
-    // Create the two transactions
-    var send_transaction = {
-        user_id: loggedInUser.id,
-        type: "Money Transfer",
-        debitAmount: amount,
-        creditAmount: 0,
-        time: time
-    };
+function convertCurrencyAndSend(receivingUser, amount){
+    var time = "2022-09-01 10:43";
 
     var receive_transaction = {
         user_id: receivingUser.id,
@@ -169,8 +172,76 @@ function sendToUser(receivingUser, amount){
         creditAmount: amount,
         time: time
     };
+
+    var send_transaction = {
+        user_id: loggedInUser.id,
+        type: "Money Transfer",
+        debitAmount: amount,
+        creditAmount: 0,
+        time: time
+    };
+    
+
+    // Check if the currencies match
+    if(receivingUser.currency == loggedInUser.currency){
+        // Save the sender's transaction
+        saveTransaction(send_transaction);
+
+        // No need to do conversion for receiver
+        saveTransaction(receive_transaction);
+        updateMainScreen();
+    }else{
+        // Conversion needed for receiving end
+
+        var currencyApiOptions = {
+            method: 'GET',
+            redirect: 'follow',
+            headers: {
+                "apikey": MY_API_KEY
+            }
+        };
+
+        fetch(`https://api.apilayer.com/exchangerates_data/convert?to=${receivingUser.currency}&from=${loggedInUser.currency}&amount=${amount}`, currencyApiOptions)
+            .then(response => response.json())
+            .then((conversion) => {
+                console.log(conversion);
+                
+                // Update and save the receiver transaction
+                var creditAmount = conversion.result;
+
+                receive_transaction.creditAmount = creditAmount;
+
+                if(window.confirm(receivingUser.name + " will receive " + receivingUser.currency + " " + creditAmount)){
+                    // Save the transactions
+                    saveTransaction(send_transaction);
+                    saveTransaction(receive_transaction);
+                }
+                
+                updateMainScreen();
+
+            })
+            .catch((error) => {
+                console.log("Error: ", error);
+                alert("Error. Cannot convert currencies");
+            });
+    }
 }
 
-function getConvertedAmount(amount, currencyFrom, currencyTo) {
+function saveTransaction(transaction){
 
+    // Create the sender's transaction
+    const data = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+        },
+        body: JSON.stringify(transaction),
+    };
+
+    fetch("http://localhost:3000/transactions", data)
+        .then(response => response.json())
+        .then(function (object) {
+            console.log(object);
+        });
 }

@@ -1,44 +1,92 @@
 {
-    "users" : [
-        {
-            "id": 1,
-            "name": "John Doe",
-            "currency": "KES",
-            "email": "john@gmail.com",
-            "password": "password"
-        },
-        {
-            "id": 2,
-            "name": "Alice Brown",
-            "currency": "USD",
-            "email": "alice@gmail.com",
-            "password": "password"
-        }
-    ],
-    "transactions" : [
-        {
-            "id": 1,
-            "user_id": 1,
-            "type": "Deposit",
-            "debitAmount": 0,
-            "creditAmount": 500,
-            "time": "2022-08-02 11:55"
-        },
-        {
-            "id": 2,
-            "user_id": 1,
-            "type": "Money Transfer",
-            "debitAmount": 350,
-            "creditAmount": 0,
-            "time": "2022-08-02 11:55"
-        },
-        {
-            "id": 3,
-            "user_id": 2,
-            "type": "Money Received",
-            "debitAmount": 0,
-            "creditAmount": 3.50,
-            "time": "2022-08-02 11:55"
-        }
-    ]
+  "users": [
+    {
+      "id": 1,
+      "name": "John Doe",
+      "currency": "KES",
+      "email": "john@gmail.com",
+      "password": "password"
+    },
+    {
+      "id": 2,
+      "name": "Alice Brown",
+      "currency": "USD",
+      "email": "alice@gmail.com",
+      "password": "password"
+    }
+  ],
+  "transactions": [
+    {
+      "id": 1,
+      "user_id": 1,
+      "type": "Deposit",
+      "debitAmount": 0,
+      "creditAmount": 500,
+      "time": "2022-08-02 11:55"
+    },
+    {
+      "id": 2,
+      "user_id": 1,
+      "type": "Money Transfer",
+      "debitAmount": 350,
+      "creditAmount": 0,
+      "time": "2022-08-02 11:55"
+    },
+    {
+      "id": 3,
+      "user_id": 2,
+      "type": "Money Received",
+      "debitAmount": 0,
+      "creditAmount": 3.5,
+      "time": "2022-08-02 11:55"
+    },
+    {
+      "user_id": 1,
+      "type": "Money Transfer",
+      "debitAmount": 100,
+      "creditAmount": 0,
+      "time": "2022-09-01 10:43",
+      "id": 4
+    },
+    {
+      "user_id": 2,
+      "type": "Money Received",
+      "debitAmount": 0,
+      "creditAmount": 0.8316,
+      "time": "2022-09-01 10:43",
+      "id": 5
+    },
+    {
+      "user_id": 2,
+      "type": "Money Transfer",
+      "debitAmount": 3,
+      "creditAmount": 0,
+      "time": "2022-09-01 10:43",
+      "id": 6
+    },
+    {
+      "user_id": 1,
+      "type": "Money Received",
+      "debitAmount": 0,
+      "creditAmount": "360.69",
+      "time": "2022-09-01 10:43",
+      "id": 7
+    },
+    {
+      "user_id": 1,
+      "type": "Money Transfer",
+      "debitAmount": 150,
+      "creditAmount": 0,
+      "time": "2022-09-01 10:43",
+      "id": 8
+    },
+    {
+      "user_id": 2,
+      "type": "Money Received",
+      "debitAmount": 0,
+      "creditAmount": "1.25",
+      "time": "2022-09-01 10:43",
+      "id": 9
+    }
+  ]
 }
