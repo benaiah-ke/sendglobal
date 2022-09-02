@@ -11,6 +11,9 @@ const loginScreen = document.querySelector('.login');
 const mainScreen = document.querySelector('.main');
 const sendMoneyScreen = document.querySelector('.send_money');
 
+// Will be set to true when a transaction is still underway
+var sending = false;
+
 // When app starts, we enable a user to log in
 login();
 
@@ -132,6 +135,12 @@ function sendMoney(){
     document.querySelector('.send_money_form').addEventListener('submit', (event) => {
         event.preventDefault();
 
+        // Check if another transfer is in progress
+        if(sending){
+            alert("Another transfer is still in progress. Please wait");
+            return;
+        }
+
         // Input fields
         var emailField = document.querySelector('.send_money_form .email');
         var amountField = document.querySelector('.send_money_form .amount');
@@ -159,6 +168,9 @@ function sendMoney(){
                 if(users.length == 0){
                     alert("The recepient does not exist");
                 }else{
+                    // Set the flag to true to block any other transaction until this is complete
+                    sending = true;
+
                     var receivingUser = users[0];
 
                     convertCurrencyAndSend(receivingUser, amount);
@@ -201,6 +213,9 @@ function convertCurrencyAndSend(receivingUser, amount){
 
                 // then back to main screen
                 toMain();
+
+                // Done sending
+                sending = false;
             });
 
     }else{
@@ -236,13 +251,23 @@ function convertCurrencyAndSend(receivingUser, amount){
                             
                             // then back to main screen
                             toMain();
+
+                            // Done sending
+                            sending = false;
                         });
+                }else{
+                    // back to main screen
+                    toMain();
+
+                    // Not sending
+                    sending = false;
                 }
 
             })
             .catch((error) => {
                 console.log("Error: ", error);
                 alert("Error. Cannot convert currencies");
+                sending = false;
             });
     }
 }
