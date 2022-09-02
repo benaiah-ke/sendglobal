@@ -21,21 +21,21 @@
       "user_id": 1,
       "type": "Deposit",
       "debitAmount": 0,
-      "creditAmount": 500,
+      "creditAmount": 500
     },
     {
       "id": 2,
       "user_id": 1,
       "type": "Money Transfer",
       "debitAmount": 350,
-      "creditAmount": 0,
+      "creditAmount": 0
     },
     {
       "id": 3,
       "user_id": 2,
       "type": "Money Received",
       "debitAmount": 0,
-      "creditAmount": 2.987,
+      "creditAmount": 2.987
     },
     {
       "user_id": 1,
