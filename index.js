@@ -113,7 +113,6 @@ function updateTransactionUi(){
             <td>${transaction.type}</td>
             <td>${parseFloat(transaction.creditAmount).toFixed(2)}</td>
             <td>${parseFloat(transaction.debitAmount).toFixed(2)}</td>
-            <td>${transaction.time}</td>
             </tr>
         `;
     });
@@ -170,22 +169,18 @@ function sendMoney(){
 }
 
 function convertCurrencyAndSend(receivingUser, amount){
-    var time = "2022-09-01 10:43";
-
     var receive_transaction = {
         user_id: receivingUser.id,
         type: "Money Received",
         debitAmount: 0,
-        creditAmount: amount,
-        time: time
+        creditAmount: amount
     };
 
     var send_transaction = {
         user_id: loggedInUser.id,
         type: "Money Transfer",
         debitAmount: amount,
-        creditAmount: 0,
-        time: time
+        creditAmount: 0
     };
     
 
