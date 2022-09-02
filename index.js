@@ -19,7 +19,13 @@ login();
 
 // Listeners
 document.querySelector('#logout_btn').addEventListener('click', logout);
-document.querySelector('#send_money_btn').addEventListener('click', sendMoney);
+document.querySelector('.send_money_form').addEventListener('submit', sendMoney);
+
+document.querySelector('#send_money_btn').addEventListener('click', () => {
+    // Hide the main screen and show send money screen
+    mainScreen.classList.add('hidden');
+    sendMoneyScreen.classList.remove('hidden');
+});
 
 function login() {
     // Hide the main screen and show the login screen
@@ -127,60 +133,54 @@ function updateTransactionUi(){
 }
 
 
-function sendMoney(){
-    // Hide the main screen and show send money screen
-    mainScreen.classList.add('hidden');
-    sendMoneyScreen.classList.remove('hidden');
+function sendMoney(event){
+    event.preventDefault();
 
-    document.querySelector('.send_money_form').addEventListener('submit', (event) => {
-        event.preventDefault();
+    // Check if another transfer is in progress
+    if(sending){
+        alert("Another transfer is still in progress. Please wait");
+        return;
+    }
 
-        // Check if another transfer is in progress
-        if(sending){
-            alert("Another transfer is still in progress. Please wait");
-            return;
-        }
+    // Input fields
+    var emailField = document.querySelector('.send_money_form .email');
+    var amountField = document.querySelector('.send_money_form .amount');
 
-        // Input fields
-        var emailField = document.querySelector('.send_money_form .email');
-        var amountField = document.querySelector('.send_money_form .amount');
+    // Ensure user has enough balance
+    var amount = amountField.value;
 
-        // Ensure user has enough balance
-        var amount = amountField.value;
+    // Ensure user is not sending to himself
+    if(emailField.value == loggedInUser.email){
+        alert("You cannot send money to yourself!");
+        return;
+    }
 
-        // Ensure user is not sending to himself
-        if(emailField.value == loggedInUser.email){
-            alert("You cannot send money to yourself!");
-            return;
-        }
+    if(amount > loggedInUser.balance){
+        alert("Amount exceeds your balance!");
+        return;
+    }
 
-        if(amount > loggedInUser.balance){
-            alert("Amount exceeds your balance!");
-            return;
-        }
+    // Check if the recepient exists
+    fetch("http://localhost:3000/users?email=" + emailField.value)
+        .then(response => response.json())
+        .then(users => {
+            // We only expect a single user if the user exists
+            // 0 if invalid credentials
+            if(users.length == 0){
+                alert("The recepient does not exist");
+            }else{
+                // Set the flag to true to block any other transaction until this is complete
+                sending = true;
 
-        // Check if the recepient exists
-        fetch("http://localhost:3000/users?email=" + emailField.value)
-            .then(response => response.json())
-            .then(users => {
-                // We only expect a single user if the user exists
-                // 0 if invalid credentials
-                if(users.length == 0){
-                    alert("The recepient does not exist");
-                }else{
-                    // Set the flag to true to block any other transaction until this is complete
-                    sending = true;
+                var receivingUser = users[0];
 
-                    var receivingUser = users[0];
+                convertCurrencyAndSend(receivingUser, amount);
 
-                    convertCurrencyAndSend(receivingUser, amount);
-
-                    // Clear fields
-                    emailField.value = '';
-                    amountField.value = '';
-                }
-            });
-    })
+                // Clear fields
+                emailField.value = '';
+                amountField.value = '';
+            }
+        });
 }
 
 function convertCurrencyAndSend(receivingUser, amount){
