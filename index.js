@@ -1,5 +1,7 @@
 // This will keep track of the currently logged in user
-var loggedInUser = null;
+var loggedInUser = {
+    balance: 0
+};
 
 // Api key for currency converter API
 const MY_API_KEY = "oHTkg5TwxSW3zWXgc8ISzq1SlEliHUrK";
@@ -117,6 +119,7 @@ function updateTransactionUi(){
         `;
     });
 
+    loggedInUser.balance = balance;
     document.querySelector('#balance').innerText = loggedInUser.currency + ' ' + balance.toFixed(2);
 }
 
@@ -192,7 +195,12 @@ function convertCurrencyAndSend(receivingUser, amount){
         // Save the sender's transaction
         saveTransaction(send_transaction)
             .then((res) => {
-                updateMainScreen();
+                // Add transaction to list and update ui
+                loggedInUser.transactions.push(send_transaction);
+                updateTransactionUi();
+
+                // then back to main screen
+                toMain();
             });
 
     }else{
@@ -222,7 +230,12 @@ function convertCurrencyAndSend(receivingUser, amount){
 
                     saveTransaction(send_transaction)
                         .then((res) => {
-                            updateMainScreen();
+                            // Add transaction to list and update ui
+                            loggedInUser.transactions.push(send_transaction);
+                            updateTransactionUi();
+                            
+                            // then back to main screen
+                            toMain();
                         });
                 }
 
