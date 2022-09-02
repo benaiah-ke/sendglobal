@@ -72,6 +72,12 @@ function updateMainScreen() {
     loginScreen.classList.add('hidden');
     sendMoneyScreen.classList.add('hidden');
 
+    // User info
+    document.querySelector('#user_name').innerText = loggedInUser.name;
+
+    // Currency for sending Money
+    document.querySelector('#send_currency').innerText = loggedInUser.currency;
+
     // Get the user's transactions
     loggedInUser.transactions = [];
 
@@ -93,7 +99,7 @@ function getLatestTransactions(){
 function updateTransactionUi(){
     var balance = 0;
 
-    const transactionList = document.querySelector(".transactions");
+    const transactionList = document.querySelector(".transactions tbody");
     transactionList.innerHTML = '';
 
     loggedInUser.transactions.forEach((transaction) => {
@@ -103,11 +109,12 @@ function updateTransactionUi(){
 
         // Add to list of transactions
         transactionList.innerHTML += `
-            <li>
-            ${transaction.type}-
-            ${transaction.creditAmount}-
-            ${transaction.debitAmount}
-            </li>
+            <tr>
+            <td>${transaction.type}</td>
+            <td>${parseFloat(transaction.creditAmount).toFixed(2)}</td>
+            <td>${parseFloat(transaction.debitAmount).toFixed(2)}</td>
+            <td>${transaction.time}</td>
+            </tr>
         `;
     });
 
@@ -128,7 +135,7 @@ function sendMoney(){
         var amountField = document.querySelector('.send_money_form .amount');
 
         // Ensure user has enough balance
-        var amount = parseFloat(amountField.value);
+        var amount = amountField.value;
 
         // Ensure user is not sending to himself
         if(emailField.value == loggedInUser.email){
@@ -184,12 +191,15 @@ function convertCurrencyAndSend(receivingUser, amount){
 
     // Check if the currencies match
     if(receivingUser.currency == loggedInUser.currency){
-        // Save the sender's transaction
-        saveTransaction(send_transaction);
-
         // No need to do conversion for receiver
         saveTransaction(receive_transaction);
-        updateMainScreen();
+        
+        // Save the sender's transaction
+        saveTransaction(send_transaction)
+            .then((res) => {
+                updateMainScreen();
+            });
+
     }else{
         // Conversion needed for receiving end
 
@@ -205,7 +215,7 @@ function convertCurrencyAndSend(receivingUser, amount){
             .then(response => response.json())
             .then((conversion) => {
                 console.log(conversion);
-                
+
                 // Update and save the receiver transaction
                 var creditAmount = conversion.result;
 
@@ -213,11 +223,13 @@ function convertCurrencyAndSend(receivingUser, amount){
 
                 if(window.confirm(receivingUser.name + " will receive " + receivingUser.currency + " " + creditAmount)){
                     // Save the transactions
-                    saveTransaction(send_transaction);
                     saveTransaction(receive_transaction);
+
+                    saveTransaction(send_transaction)
+                        .then((res) => {
+                            updateMainScreen();
+                        });
                 }
-                
-                updateMainScreen();
 
             })
             .catch((error) => {
@@ -227,7 +239,7 @@ function convertCurrencyAndSend(receivingUser, amount){
     }
 }
 
-function saveTransaction(transaction){
+async function saveTransaction(transaction){
 
     // Create the sender's transaction
     const data = {
@@ -239,9 +251,17 @@ function saveTransaction(transaction){
         body: JSON.stringify(transaction),
     };
 
-    fetch("http://localhost:3000/transactions", data)
+    return fetch("http://localhost:3000/transactions", data)
         .then(response => response.json())
         .then(function (object) {
             console.log(object);
         });
+}
+
+
+function toMain() {
+    // Hide the login screen and show main screen
+    mainScreen.classList.remove('hidden');
+    loginScreen.classList.add('hidden');
+    sendMoneyScreen.classList.add('hidden');
 }

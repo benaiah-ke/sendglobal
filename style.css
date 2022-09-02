@@ -1,4 +1,172 @@
-/* Utility classes */
+*{
+    box-sizing: border-box;
+}
+
+body{
+    background: #f1f5f9;
+}
+
+/* Utility classes and common controls */
 .hidden{
     display: none;
+}
+
+.form-input{
+    margin-bottom: 1.5rem;
+}
+
+.form-input label{
+    display: block;
+    margin: 0 15px 5px;
+}
+
+input, select{
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    border: 2px solid #eaeaea;
+    background: #eaeaea;
+    outline: none;
+    padding: 14px;
+    border-radius: 30px;
+    transition: .3s all !important;
+}
+
+input:focus, select:focus{
+    border-color:#292bbe;
+    background: #fff;
+}
+
+.btn{
+    display: block;
+    width: 100%;
+    border: none;
+    outline: none;
+    padding: 15px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-blue{
+    background: #007bff;
+    color: #fff;
+    transition: .3s all !important;
+}
+
+.btn-blue:hover, .btn-blue:focus{
+    background: #292bbe;
+}
+
+.logo{
+    width: 60px;
+    height: 60px;
+    display: block;
+    margin: auto;
+}
+
+.header{
+    text-align: center;
+    margin: 2rem 0;
+}
+
+/* screen content */
+.screen{
+    padding: 2rem 0;
+}
+
+.screen .screen_content{
+    width: 100%;
+    max-width: 580px;
+    margin: auto;
+    padding: 1.5rem;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    background: #fff;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .3);
+}
+
+@media(max-width: 450px){
+    body{
+        background: #fff;
+    }
+
+    .screen{
+        padding: 0;
+    }
+
+    .screen .screen_content{
+        width: 100%;
+        max-width: 100%;
+        border: none;
+        border-radius: 0px;
+        box-shadow: none;
+    }
+}
+
+/* Main */
+.main-header, .summary{
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+}
+
+.main-header{
+    background: #0b9e1e;
+    color: #fff;
+    border-radius: 20px 20px 0 0;
+    margin: -1.5rem -1.5rem 0;
+}
+
+.main-header .btn{
+    margin-left: auto;
+    width: auto;
+    padding: 10px;
+    background: #ff7f50;
+    color: #fff;
+    transition: .2s all !important;
+}
+
+.main-header .btn:hover, .main-header .btn:focus{
+    background: #ff4500;
+}
+
+.main-header h3{
+    margin: 0;
+}
+
+
+.summary{
+    border-bottom: 1px solid #ccc;
+    padding: 1.25rem;
+    margin: 0 -1.5rem 0;
+}
+
+.summary .btn{
+    margin-left: auto;
+    width: auto;
+    padding: 10px;
+}
+
+
+.transactions{
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.transactions thead{
+    background: #007bff;
+    color: #fff;
+}
+
+.transactions td, .transactions th{
+    padding: .75rem .5rem;
+}
+
+.transactions td:not(:last-child), .transactions th:not(:last-child){
+    border-right: 1px solid #ccc;
+}
+
+.transactions tbody tr:nth-of-type(even){
+    background: #f2f6f9;
 }

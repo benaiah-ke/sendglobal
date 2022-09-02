@@ -9,36 +9,98 @@
 </head>
 <body>
 
-    <div class="login">
+    <div class="login screen">
 
         <form action="" class="login_form">
-            Email: <input type="email" name="email" id="email" required><br>
-            Password: <input type="password" name="password" id="password" required><br>
-            <button>Log In</button>
+            
+            <div class="screen_content">
+                <img class="logo" src="https://cdn-icons-png.flaticon.com/512/3572/3572730.png" alt="Send Global">
+                <h3 class="header">Log In</h3>
+                
+                <div class="form-input">
+                    <label>Email</label>
+                    <input type="email" name="email" id="email" required>
+                </div>
+
+                <div class="form-input">
+                    <label>Password</label>
+                    <input type="password" name="password" id="password" required>
+                </div>
+
+                <div class="form-input">
+                    <button class="btn btn-blue">Log In</button>
+                </div>
+
+            </div>
         </form>
 
     </div>
 
-    <div class="main hidden">
+    <div class="main screen hidden">
 
-        <button id="logout_btn">Log Out</button>
+        <div class="screen_content">
 
-        Balance: <span id="balance">0.00</span>
+            <div class="main-header">
+                <h3 id="user_name">User Name Here</h3>
 
-        <ul class="transactions">
+                <button class="btn btn-red" id="logout_btn">Log Out</button>
+            </div>
 
-        </ul>
+            <div class="summary">
+                <span id="balance">KES 0.00</span>
+                <button class="btn" id="send_money_btn">Send Money</button>
+            </div>
 
-        <button id="send_money_btn">Send Money</button>
+            <div>
+                <h3>Your Transactions</h3>
+                
+                <table class="transactions">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Credited</th>
+                            <th>Debited</th>
+                            <th>Time</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
 
     </div>
 
-    <div class="send_money hidden">
+
+    <div class="send_money screen hidden">
 
         <form action="" class="send_money_form">
-            Receiver's Email: <input type="email" name="email" class="email" required><br>
-            Amount: <input type="number" name="amount" class="amount" required><br>
-            <button>Send</button>
+            
+            <div class="screen_content">
+                <h3 class="header">Send Money</h3>
+                
+                <div class="form-input">
+                    <label>Receiver's Email</label>
+                    <input type="email" name="email" class="email" required>
+                </div>
+
+                <div class="form-input">
+                    <label>Amount (in <span id="send_currency"></span>) </label>
+                    <input type="number" name="amount" class="amount" required>
+                </div>
+
+                <div class="form-input">
+                    <button class="btn btn-blue">Send</button>
+                </div>
+
+                <div class="form-input">
+                    <button type="button" onclick="toMain()" class="btn">Back</button>
+                </div>
+
+            </div>
         </form>
 
     </div>
