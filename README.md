@@ -4,6 +4,7 @@ The application allows users to send money to each other even if they use differ
 ## Set up
 - Run npm install to install dependencies
 - Run json-server --watch db.json to start the json server
+- Use npx json-server --watch db.json if you get the error 'json-server: command not found'
 
 ## Usage
 Open index.html on a browser
