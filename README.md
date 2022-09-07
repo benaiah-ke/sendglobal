@@ -1,7 +1,7 @@
 # Sendglobal
 
 ##### By Benaiah Praise Wepundi 
-### Moringa Pre-Prep Week Two Independent Project
+##### Moringa Prep Phase 1 Project
 
 ## Table of Content
 
