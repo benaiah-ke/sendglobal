@@ -18,4 +18,4 @@ You can test transferring funds between the accounts. All you need is specify th
 You can see a list of transactions for each user when logged in to his/her account
 
 ## Preview
-See a preview of the application at <a href="https://sendglobal.herokuapp.com/">https://sendglobal.herokuapp.com</a>
+See a preview of the application at <a href="https://sendglobal.herokuapp.com/" target="_blank">https://sendglobal.herokuapp.com</a>
