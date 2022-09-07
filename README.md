@@ -16,3 +16,6 @@ Open index.html in another tab and log in using a different email
 You can test transferring funds between the accounts. All you need is specify the recepient's email and the amount
 
 You can see a list of transactions for each user when logged in to his/her account
+
+## Preview
+See a preview of the application at <a href="https://sendglobal.herokuapp.com/">https://sendglobal.herokuapp.com</a>
