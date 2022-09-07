@@ -6,7 +6,7 @@
 ## Table of Content
 
 + [Description](#description)
-+ [Technologies Used](#technologies)
++ [Technologies Used](#technologies-used)
 + [Set Up](#set-up)
 + [Usage](#usage)
 + [Live Preview](#preview)
