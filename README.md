@@ -6,6 +6,7 @@
 ## Table of Content
 
 + [Description](#description)
++ [Technologies Used](#technologies)
 + [Set Up](#set-up)
 + [Usage](#usage)
 + [Live Preview](#preview)
@@ -14,6 +15,13 @@
 ## Description
 
 SendGlobal is a platform that enables peer to peer money transfer across platforms.
+
+## Technologies Used
+
+The technologies used to develop Sendglobal are;
+- HTML, CSS and JS for the front end
+- JSON for data interchange
+- json-server to create a 'fake backend'
 
 ## Set up
 
