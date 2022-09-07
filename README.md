@@ -1,7 +1,7 @@
 # Sendglobal
 
 ##### By Benaiah Praise Wepundi 
-##### Moringa Prep Phase 1 Project
+#### Moringa Prep Phase 1 Project
 
 ## Table of Content
 
@@ -11,7 +11,7 @@
 + [Live Preview](#preview)
 + [Authors Info](#author-Info)
 
-##Description
+## Description
 
 SendGlobal is a platform that enables peer to peer money transfer across platforms.
 
